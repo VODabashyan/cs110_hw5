@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<canvas id="canvas" width="500" height="300">
+</canvas>
+
+
+<script>
+
+let canvas = document.getElementById("canvas");
+let context = canvas.getContext("2d");
+const NUM_POINTS = 30;
+const points = [];
+const colors =['black', 'red']
+
+for(let i = 0; i < NUM_POINTS; i++) {
+
+  points.push({
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+    width: Math.random() * 20,
+    height: Math.random() * 20,
+    xDelta: 1, 
+    yDelta: 1, 
+    color: Math.floor(Math.random()*2)
+
+  });
+
+}
+
+const draw = function() {
+
+ 			context.clearRect(0, 0, canvas.width, canvas.height);
+ 			points.forEach( function(thePoint) {
+ 				context.fillStyle = colors[thePoint.color];
+ 				context.fillRect(thePoint.x, thePoint.y, thePoint.width, thePoint.height);
+ 				thePoint.x += thePoint.xDelta;
+ 				thePoint.y += thePoint.yDelta;
+ 			 	if(thePoint.x+thePoint.width >= 500 || thePoint.x <= 0) {
+ 			 		thePoint.xDelta *= -1;
+  		}
+ 				if(thePoint.y+thePoint.height >= 300 || thePoint.y <= 0) {
+ 			 		thePoint.yDelta *= -1;
+
+ 				}
+
+ 			});
+
+ 		};
+		
+let animate = function() {
+    draw();
+    setTimeout(animate, 10);
+};
+animate();
+
+
+</script>
+
+</html>
